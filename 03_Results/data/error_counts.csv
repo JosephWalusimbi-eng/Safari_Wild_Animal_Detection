@@ -1,0 +1,8 @@
+class,gt_boxes,found_correct,found_wrong_class,missed,false_positive_boxes
+antelope,132,60,0,72,48
+bird,67,0,0,67,0
+chimpanzee,138,98,0,40,59
+elephant,22,22,0,0,11
+gorilla,44,32,0,12,15
+hippo,186,181,0,5,41
+hog,73,67,0,6,12

@@ -1,0 +1,71 @@
+DATA-EFFICIENT WILDLIFE DETECTION FROM UGANDAN FIELD FOOTAGE
+Capstone project - Joseph Walusimbi - B.Eng. Electronics and Computer Engineering
+=====================================================================================
+
+WHAT THIS PROJECT IS
+--------------------
+A small object-detection model (YOLOv8-nano) that finds seven animals - antelope (Uganda
+kob), bird, chimpanzee, elephant, gorilla, hippo and hog (warthog) - in video frames from
+Uganda, trained on only 849 training images. The project tests which cheap data techniques
+help when data are scarce, and measures how honest a normal test score is.
+
+WHAT TO READ, IN ORDER
+----------------------
+1. 01_Report\Capstone_Report.docx   (or the identical Capstone_Report.pdf) - the full report,
+   17 pages. The one-page Summary comes first; Section 3.5 lists how the finished work differs
+   from the proposal.
+2. 03_Results\results_notebook.html - every figure and table behind the report, opens in a
+   web browser (the .ipynb is the same, re-runnable).
+3. 05_Supporting\ - the proposal as submitted, a table of differences from it, and the
+   dated project log.
+
+THE FOLDERS
+-----------
+  01_Report\            The capstone report (Word and PDF).
+  02_Model_and_Demo\    The trained model (model\), predict.py to run it on photos or video,
+                        HOWTOUSE.txt (plain-English instructions), requirements_exact.txt.
+  03_Results\           Results notebook (.ipynb and .html), all figures (figures\) and
+                        the result tables in CSV form (data\).
+  04_Code\              All scripts used: building the data, training, evaluating, exporting.
+                        README.txt there explains each script.
+  05_Supporting\        Proposal, PROPOSAL_VS_DELIVERED.md, Project_Log.md (step-by-step record
+                        of every decision), NEXT_STEPS.md, evidence\ (early exploratory images).
+
+THE RESULTS IN SIX LINES
+------------------------
+  - Test mAP50 0.71 for the chosen model (standard augmentation, "S1").
+  - A flawed data split had hidden the chimpanzee class; fixing it raised chimpanzee mAP50 from
+    0.14 to 0.67 under identical training settings.
+  - Standard augmentation helped (0.61 to 0.71 test mAP50); copy-paste, class balancing and
+    pseudo-labelling gave no clear further gain.
+  - Birds are essentially not detected (test mAP50 about 0.03).
+  - Detection on recording sessions not seen in training is poor (gorilla 0.77 to 0.15, hippo
+    0.97 to 0.06): normal test scores overstate real-world performance.
+  - The model is 12 MB (ONNX) and runs at about 13 ms per image on a desktop CPU.
+
+TO TRY THE MODEL
+----------------
+  1. pip install ultralytics opencv-python onnxruntime
+  2. In 02_Model_and_Demo\:   python predict.py some_photo.jpg
+     (a video:  python predict.py clip.mp4 --every 5).  Results go to a "predictions" folder.
+  Full instructions: 02_Model_and_Demo\HOWTOUSE.txt.
+
+TO RE-RUN THE FIGURES AND TABLES
+--------------------------------
+  Open 03_Results\results_notebook.ipynb in Jupyter and run all cells (needs pandas and
+  matplotlib). It reads only the saved files in 03_Results\data - no GPU or dataset needed.
+
+WHAT IS NOT IN THIS FOLDER, AND WHY
+-----------------------------------
+The raw training outputs (about 60 training runs, 0.6 GB), the extracted image cut-outs, the
+training logs, the dataset label files and the 4.3 GB source dataset were moved to a separate
+working archive, D:\Safari_Wild_Animal_Detection_working_archive, because a reader does not
+need them to assess the work. Nothing was deleted. The source data are public: Zenodo,
+doi:10.5281/zenodo.17036940 (CC BY 4.0). A working copy of the code and runs is also on the
+GPU computer where the training was done.
+
+HONEST STATUS
+-------------
+Everything in the project proposal's core plan was done. Not done: the optional local-language
+species-name table (planned, see 05_Supporting\NEXT_STEPS.md) and the optional synthetic-image
+experiment. Known limits are stated in Section 5 of the report.

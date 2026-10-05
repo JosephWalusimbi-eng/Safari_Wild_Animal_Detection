@@ -1,0 +1,13 @@
+run,class,precision,recall,mAP50,mAP50-95
+ExpA_lso_seed0,all,0.0513,0.1097,0.0425,0.0107
+ExpA_lso_seed0,elephant,0.0,0.0,0.0,0.0
+ExpA_lso_seed0,gorilla,0.102,0.253,0.1163,0.0296
+ExpA_lso_seed0,hippo,0.0518,0.0762,0.0111,0.0024
+ExpA_lso_seed1,all,0.0817,0.1868,0.0539,0.0171
+ExpA_lso_seed1,elephant,0.0,0.0,0.0,0.0
+ExpA_lso_seed1,gorilla,0.1453,0.4699,0.1459,0.0486
+ExpA_lso_seed1,hippo,0.0999,0.0905,0.0159,0.0027
+ExpA_lso_seed2,all,0.172,0.2756,0.1139,0.0285
+ExpA_lso_seed2,elephant,0.0,0.0,0.0,0.0
+ExpA_lso_seed2,gorilla,0.1926,0.5316,0.1778,0.0485
+ExpA_lso_seed2,hippo,0.3235,0.2952,0.1638,0.0369

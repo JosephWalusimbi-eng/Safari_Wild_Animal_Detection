@@ -1,0 +1,6 @@
+path: C:/Users/mrjos/Downloads/wildlife-yolo-naive
+train: images/train
+val: images/val
+test: images/test
+nc: 7
+names: ['antelope', 'bird', 'chimpanzee', 'elephant', 'gorilla', 'hippo', 'hog']

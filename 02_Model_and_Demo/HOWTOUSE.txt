@@ -1,0 +1,99 @@
+HOW TO USE THE WILDLIFE DETECTOR (predict.py)
+=============================================
+
+WHAT IT DOES
+------------
+You give it a photo, a folder of photos, or a video. It looks for seven kinds of
+animal and draws a coloured box around each one it finds, with the animal's name
+and a confidence score (0 to 1, higher = more sure). The seven kinds are:
+
+    antelope (Uganda kob), bird, chimpanzee, elephant, gorilla, hippo, hog (warthog)
+
+It saves three things in an output folder (default: a folder called "predictions"
+next to where you run it):
+  1. a copy of each photo / the video with the boxes drawn on it
+  2. detections.csv - a table with one row per animal found
+     (file, video frame number, animal, confidence, box corners in pixels)
+  3. a short summary printed on screen: how many of each animal were found
+
+WHAT YOU NEED (one-time setup)
+------------------------------
+  - Python 3.10 or newer
+  - Install the packages:   pip install ultralytics opencv-python onnxruntime
+  - The model file. It is in the "model" folder next to predict.py:
+        model/S1_seed0_best.pt      (the main model, 6 MB)
+        model/S1_seed0_best.onnx    (same model in ONNX format, 12 MB, runs faster on a plain CPU)
+    predict.py uses the .pt file automatically if the folder layout is unchanged.
+  No graphics card is needed; it just runs faster with one.
+
+HOW TO RUN IT
+-------------
+Open a terminal (PowerShell or Command Prompt) in this folder, then:
+
+  One photo:
+      python predict.py photo.jpg
+
+  A whole folder of photos:
+      python predict.py C:\my_photos
+
+  A video (checks every 5th frame, which is much faster and usually enough):
+      python predict.py my_clip.mp4 --every 5
+
+  Use the ONNX model:
+      python predict.py my_clip.mp4 --model model\S1_seed0_best.onnx
+
+  Only show detections you are more sure of:
+      python predict.py photo.jpg --conf 0.5
+
+  Choose where results go:
+      python predict.py photo.jpg --out C:\results
+
+OPTIONS
+-------
+  --conf 0.25    Minimum confidence to show a box (default 0.25).
+                 Higher = fewer boxes, fewer false alarms, but more missed animals.
+                 Lower = more animals found, but more wrong boxes.
+  --every N      For videos: look at every Nth frame (default 1 = every frame).
+  --model FILE   Use a different model file (.pt or .onnx).
+  --out FOLDER   Where to save results (default: predictions).
+  --no-save-media  Write only detections.csv, not the annotated photos/video.
+  --imgsz 640    Size the model works at. Leave at 640 (the size it was trained at).
+  --device cpu   Force the CPU (or give a GPU number, e.g. 0). Default: the GPU if there is one.
+                 ONNX models always run on the CPU and need only "onnxruntime".
+                 predict.py never installs packages by itself.
+
+HOW TO READ THE RESULTS
+-----------------------
+  - Confidence is the model's own score, not a guarantee. 0.9 is very sure; 0.3 is a guess.
+  - detections.csv can be opened in Excel. The "frame" column is the video frame number
+    (blank for photos). At 25 frames per second, frame 250 is about 10 seconds in.
+  - A count in the summary is a count of boxes, not of distinct animals: in a video the
+    same animal appears in many frames, so use it to see WHICH animals are present, not
+    HOW MANY there are.
+
+WHAT TO KEEP IN MIND (known limits - see the capstone report, Sections 4.3 to 4.7)
+-----------------------------------------------------------------------------------
+  - It was trained on only 849 photos from 9 recording sessions in Uganda.
+  - It almost never finds BIRDS (it found 0 of 67 in the test photos). Do not use it to count birds.
+  - It misses many small or distant animals, especially antelope in a herd (it found about
+    45% of antelope in the test photos) and chimpanzees hidden in leaves.
+  - It works best on footage that looks like what it was trained on. On footage from other
+    places or cameras it can miss animals or name the wrong species. Always check a sample by eye.
+  - Speed on a normal PC CPU: about 13 milliseconds per image for the model itself
+    (about 75 images per second). It has not been tested on a small field device.
+
+IF SOMETHING GOES WRONG
+-----------------------
+  "Missing package"             -> run the pip install line above.
+  "Cannot find the model file"  -> check the "model" folder is next to predict.py, or use --model.
+  "Unsupported file type"       -> use an image (.jpg .png .bmp .webp) or video (.mp4 .avi .mov .mkv .m4v).
+  Video output will not play    -> open the saved *_detected.mp4 in VLC.
+
+WHERE THINGS ARE (the whole submission folder)
+----------------------------------------------
+  This folder (02_Model_and_Demo):  predict.py, HOWTOUSE.txt, model\ (the trained model files)
+  ..\01_Report\      the capstone report (Word and PDF)
+  ..\03_Results\     results notebook, figures and result tables
+  ..\04_Code\        the scripts used to build the data and train/evaluate (needs the GPU computer)
+  ..\05_Supporting\  proposal, differences from it, and the step-by-step project log
+  Start with ..\00_START_HERE.txt
