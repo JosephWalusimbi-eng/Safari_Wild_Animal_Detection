@@ -69,3 +69,6 @@ HONEST STATUS
 Everything in the project proposal's core plan was done. Not done: the optional local-language
 species-name table (planned, see 05_Supporting\NEXT_STEPS.md) and the optional synthetic-image
 experiment. Known limits are stated in Section 5 of the report.
+
+"D:\Safari_Wild_Animal_Detection_working_archive" is the working folder having all the progress
+
