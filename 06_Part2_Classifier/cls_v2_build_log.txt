@@ -1,0 +1,2 @@
+train images per class: {'bird': 732, 'buffalo': 3, 'cheetah': 12, 'chimpanzee': 1200, 'crocodile': 108, 'elephant': 282, 'fish': 186, 'fox': 633, 'frog': 1200, 'giraffe': 69, 'gorilla': 549, 'hippo': 1200, 'hyena': 30, 'kudu': 42, 'leopard': 1200, 'lion': 18, 'monkey': 87, 'other': 234, 'rhino': 84, 'snake': 285, 'squirrel': 90, 'tiger': 1200, 'tortoise': 111, 'uganda_kob': 411, 'warthog': 795, 'zebra': 87}
+total train: 10848  steps applied: {'context_crop': 3320, 'jitter': 3623, 'homogenise': 5069, 'fence': 2155, 'skipped_dominated_or_tiny': 60}

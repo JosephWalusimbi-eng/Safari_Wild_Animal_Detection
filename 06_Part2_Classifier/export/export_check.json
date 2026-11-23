@@ -1,0 +1,9 @@
+{
+ "run": "v1_n_seed2",
+ "onnx_mb": 5.89,
+ "images_checked": 606,
+ "top1_agreement": 1.0,
+ "max_prob_diff": 0.0,
+ "cpu_ms_per_image": 7.87,
+ "classes": 26
+}

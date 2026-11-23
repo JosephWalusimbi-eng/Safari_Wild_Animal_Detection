@@ -1,0 +1,29 @@
+class            train       val      test uwec_test
+uganda_kob         137        57        60         0
+bird               244        60        60         8
+chimpanzee         400        38        43         7
+elephant           114        10        20         0
+gorilla            183        17        30         0
+hippo              400        60        60         0
+warthog            265        60        60         0
+tiger              400        60        60         3
+leopard            400        59        60         0
+fox                211        20        22         0
+frog               400        33        38         0
+snake               95        17         8         0
+fish                62        10         5         0
+zebra               29         3         3         5
+monkey              29         6         5         0
+crocodile           36         3         0         1
+tortoise            37         0         3         0
+giraffe             23        10         2         0
+rhino               28         6         1         0
+squirrel            30         3         1         0
+lion                 6         2         1         9   LOW-DATA
+buffalo              1         0         2         9   LOW-DATA
+cheetah              4         0         0         5   LOW-DATA
+kudu                14         1         1         0   LOW-DATA
+hyena               10         2         0         0   LOW-DATA
+other               78        16        14         0
+totals           3636       553       559        47
+skipped: {'near_dup_in_val': 62, 'near_dup_in_test': 40}

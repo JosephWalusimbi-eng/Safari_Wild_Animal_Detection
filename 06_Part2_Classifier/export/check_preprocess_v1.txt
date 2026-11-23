@@ -1,0 +1,5 @@
+images: 606
+(1) predict vs torchvision-on-cv2, max prob diff : 9.06e-06
+(2) onnx vs pytorch (same tensor), max prob diff : 3.58e-06
+(3) PREPROCESS vs torchvision, max pixel diff   : 0.0000
+(4) PREPROCESS vs torchvision, max prob diff    : 0.0000, top-1 flips 0

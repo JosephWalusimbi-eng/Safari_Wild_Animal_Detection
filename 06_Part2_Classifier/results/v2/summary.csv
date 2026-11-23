@@ -1,0 +1,7 @@
+run,split,n,top1,top5,macro_acc
+v2_n_seed0,test,559,0.932,0.9911,0.7353
+v2_n_seed0,uwec_test,47,0.1915,0.4468,0.2583
+v2_n_seed1,test,559,0.9177,0.9911,0.8097
+v2_n_seed1,uwec_test,47,0.2128,0.4468,0.2833
+v2_n_seed2,test,559,0.9213,0.9964,0.7369
+v2_n_seed2,uwec_test,47,0.1064,0.3617,0.125

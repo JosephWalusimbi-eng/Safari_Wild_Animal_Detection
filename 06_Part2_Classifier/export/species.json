@@ -1,0 +1,357 @@
+{
+ "uganda_kob": {
+  "name": "Uganda kob",
+  "scientific": "Kobus kob thomasi",
+  "safety": "",
+  "low_data": false,
+  "facts": [
+   "The Uganda kob is Uganda's national antelope and appears on the country's coat of arms.",
+   "Male kobs compete for small territories called leks, where females come to choose a mate.",
+   "Kobs can run at high speed to escape predators such as lions and hyenas."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "bird": {
+  "name": "Bird",
+  "scientific": "Aves (many species)",
+  "safety": "",
+  "low_data": false,
+  "facts": [
+   "Uganda is home to over 1,000 recorded bird species, one of the richest bird diversities in Africa.",
+   "Many birds seen on safari gather near rivers and swamps, where food is easiest to find.",
+   "Bird calls and flight patterns can reveal when a larger predator is nearby."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "chimpanzee": {
+  "name": "Chimpanzee",
+  "scientific": "Pan troglodytes",
+  "safety": "Wild animal: keep your distance.",
+  "low_data": false,
+  "facts": [
+   "Chimpanzees live in social groups and communicate through calls, gestures, and facial expressions.",
+   "They use tools, such as sticks and stones, to get food like insects and nuts.",
+   "Chimpanzees share about 98 percent of their DNA with humans, their closest living relatives."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "elephant": {
+  "name": "African elephant",
+  "scientific": "Loxodonta africana",
+  "safety": "Dangerous: keep a wide distance.",
+  "low_data": false,
+  "facts": [
+   "Elephants are the largest land animals and can weigh as much as six tonnes.",
+   "They live in close family groups led by an older, experienced female.",
+   "Elephants use their trunks for breathing, smelling, drinking, and picking up objects."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "gorilla": {
+  "name": "Gorilla",
+  "scientific": "Gorilla beringei (in Uganda)",
+  "safety": "Wild animal: keep your distance.",
+  "low_data": false,
+  "facts": [
+   "Gorillas live in family groups led by one dominant adult male, called a silverback.",
+   "They are mostly plant eaters, spending much of the day feeding on leaves, stems, and fruit.",
+   "Gorillas are a critically endangered species, and Uganda is one of the few countries where they survive in the wild."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "hippo": {
+  "name": "Hippopotamus",
+  "scientific": "Hippopotamus amphibius",
+  "safety": "Dangerous: keep a wide distance.",
+  "low_data": false,
+  "facts": [
+   "Hippos spend most of the day in water and come onto land mainly at night to feed.",
+   "Despite their size, hippos can run faster than a human over short distances on land.",
+   "Hippos are considered one of the most dangerous animals in Africa due to their aggressive behaviour."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "warthog": {
+  "name": "Warthog",
+  "scientific": "Phacochoerus africanus",
+  "safety": "",
+  "low_data": false,
+  "facts": [
+   "Warthogs use their snouts and tusks to dig for roots and bulbs in the ground.",
+   "They often shelter in abandoned burrows, usually ones dug by other animals such as aardvarks.",
+   "Warthogs can run quickly to escape danger and often live in small family groups."
+  ],
+  "local": {
+   "luganda": {
+    "text": "",
+    "verified": false
+   },
+   "runyankole": {
+    "text": "",
+    "verified": false
+   },
+   "rutooro": {
+    "text": "",
+    "verified": false
+   },
+   "ateso": {
+    "text": "",
+    "verified": false
+   }
+  }
+ },
+ "tiger": {
+  "name": "Tiger",
+  "scientific": "Panthera tigris",
+  "safety": "Dangerous big cat.",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "leopard": {
+  "name": "Leopard",
+  "scientific": "Panthera pardus",
+  "safety": "Dangerous big cat.",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "fox": {
+  "name": "Fox",
+  "scientific": "Vulpes and related genera",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "frog": {
+  "name": "Frog or toad",
+  "scientific": "Anura (many species)",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "snake": {
+  "name": "Snake",
+  "scientific": "Serpentes (cobras, pythons, vipers)",
+  "safety": "Do not approach: some snakes are venomous.",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "fish": {
+  "name": "Fish",
+  "scientific": "many species",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "zebra": {
+  "name": "Zebra",
+  "scientific": "Equus quagga",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "monkey": {
+  "name": "Monkey",
+  "scientific": "Cercopithecidae (many species)",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "crocodile": {
+  "name": "Crocodile",
+  "scientific": "Crocodylus niloticus (Nile crocodile)",
+  "safety": "Dangerous: stay away from the water's edge.",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "tortoise": {
+  "name": "Tortoise",
+  "scientific": "Testudinidae",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "giraffe": {
+  "name": "Giraffe",
+  "scientific": "Giraffa camelopardalis",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "rhino": {
+  "name": "Rhinoceros",
+  "scientific": "Ceratotherium simum / Diceros bicornis",
+  "safety": "Dangerous: keep a wide distance.",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "squirrel": {
+  "name": "Squirrel",
+  "scientific": "Sciuridae (many species)",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ },
+ "lion": {
+  "name": "Lion",
+  "scientific": "Panthera leo",
+  "safety": "Dangerous big cat.",
+  "low_data": true,
+  "facts": [],
+  "local": {}
+ },
+ "buffalo": {
+  "name": "African buffalo",
+  "scientific": "Syncerus caffer",
+  "safety": "Dangerous: keep a wide distance.",
+  "low_data": true,
+  "facts": [],
+  "local": {}
+ },
+ "cheetah": {
+  "name": "Cheetah",
+  "scientific": "Acinonyx jubatus",
+  "safety": "Wild big cat.",
+  "low_data": true,
+  "facts": [],
+  "local": {}
+ },
+ "kudu": {
+  "name": "Kudu",
+  "scientific": "Tragelaphus spp.",
+  "safety": "",
+  "low_data": true,
+  "facts": [],
+  "local": {}
+ },
+ "hyena": {
+  "name": "Hyena",
+  "scientific": "Hyaenidae (e.g. Crocuta crocuta)",
+  "safety": "Wild animal: keep your distance.",
+  "low_data": true,
+  "facts": [],
+  "local": {}
+ },
+ "other": {
+  "name": "Not one of the species I know",
+  "scientific": "",
+  "safety": "",
+  "low_data": false,
+  "facts": [],
+  "local": {}
+ }
+}
