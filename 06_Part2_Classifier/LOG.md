@@ -195,3 +195,71 @@ identical to the local build (`cls_v2_build_log.txt` vs `cls_v2_build_log_gpu.tx
 Added to the start screen: "Accuracy on real phone photos so far is about 1 in 5. Works best on a
 close, clear photo." (1 in 5 = UWEC top-1 0.19 ± 0.03 over 3 seeds, n = 47; Entry 5/9.) Cache
 `ugawv-v1-6`. If the model is retrained, update this number from the new UWEC/field result.
+
+## 2026-11-24 - Entry 13: Part 2 report (tourism framing)
+
+- Built `report/UgaWildVision_Part2_Report.docx` (+ PDF) with `report/build_report.py`, in the requested
+  format (title, abstract, introduction, methodology, setup, results, analysis, discussion, limitations,
+  conclusion), Times New Roman 12/14/16, justified, with contents, list of tables and list of figures.
+- On the owner's instruction the report is framed around AI for advancing tourism in Uganda: 2024 figures
+  (1,371,895 visitors, USD 1.28 billion, Ministry of Tourism), guiding and local-language gaps (UWEC to
+  Parliament, 2018), 28.0% internet use (DataReportal 2025). Sources were looked up, not written from memory;
+  citations are numbered automatically in order of first use.
+- Extra figures from saved CSVs: `scripts/make_report_figures.py` -> `report/figures/` (charts and
+  diagrams only, no photos).
+- Title page: Joseph Walusimbi (2401600068) and Joanita Namuyiga (2401600382), owner's instruction.
+- Word COM field update hung twice: (1) a stale `~$` lock file from a killed run made Word show a hidden
+  "file in use" prompt; (2) two XML elements were out of schema order (`pgNumType` after `cols`,
+  `tblCellMar` after `tblLook`), so Word showed a hidden "unreadable content" prompt. Fixed the order;
+  `report/update_fields.ps1` then refreshes contents and lists and exports the PDF.
+
+## 2026-11-24 - Entry 14: languages (text and audio)
+
+- `scripts/sunbird_languages.py`: names in Luganda (lug), Runyankole (nyn), Rutooro (ttj), Ateso (teo) and
+  Kiswahili (swa) via Sunbird AI `POST /tasks/translate` (Sunflower), back-translation to English, and
+  speech via `POST /tasks/audio/speech` (no Rutooro voice). API keys come from environment variables only
+  (`SUNBIRD_API_KEY`, `_2`, `_3`); nothing secret is stored. Cache and CSV: archive `evidence/sunbird/`;
+  CSV copied to `results/sunbird_names.csv`.
+- Single-word machine translation is unreliable (e.g. Ateso for lion -> "Ekingok", back-translated "Dog";
+  "Uganda kob" -> sentences about Uganda). Automatic check: shown only if the back-translation names the
+  same animal and the output is not just the English word. All names stay `verified=false`.
+- Visitor languages chosen by a fixed rule on UBOS Tourism Satellite Account 2023, Table 2.9 (2019:
+  1,542,620 visitors, 297,726 leisure): include if >= 2% of all or of leisure visitors.
+  In: Kiswahili 33.7/12.4%, French 16.4/7.2%, German 3.9/10.1%, Dutch 1.6/4.1%. Out: Italian 0.6/1.98%,
+  Spanish 0.4/1.6%, Arabic (UAE + other Middle East) 0.8/0.7%, Russian not reported separately.
+  `scripts/add_visitor_languages.py` writes French/German/Dutch common names (checked against Wikipedia
+  titles); the app speaks them with the phone's own voice (Web Speech API).
+- App: language menu extended, "Listen" button, audio cached by the service worker, QR code
+  (`icons/qr.png`, decoded and checked) and printable `install.html`.
+
+## 2026-11-24 - Entry 15: field-guide redesign, facts, republish, presentation
+
+- App redesigned on the owner's request after a "pocket field guide" example: Animals tab (photo cards,
+  search, group chips), animal page (photo with credit, local name + Listen, IUCN status, danger, Few-photos
+  tag, taxonomy incl. Swahili name, facts), camera tab for identification (preprocessing and model code
+  unchanged: browser test hippo 98% in 29 ms), "I saw it!" sightings stored on the phone, About with QR.
+- `scripts/build_catalog.py`: guide photos = lead image of the English Wikipedia article, accepted only if
+  the Commons licence is CC0 / PD / CC BY / CC BY-SA (giraffe's GFDL-only photo rejected; Rothschild's giraffe
+  used); 800 px; author/licence/source stored and shown. Taxonomy + IUCN status from Wikidata (bird class
+  set to Aves by hand; fox and snake taxonomy filled by hand). No training image is shown anywhere.
+- `scripts/add_facts.py`: facts for the 18 species without any (owner: "interesting facts").
+- Language check tightened: a name also passes if it equals the Kiswahili/Luganda Wikipedia article title
+  (rescued Kiboko, Twiga, Ndege); more than four words fails (caught "Kudu ni mji wa Kenya ..."). Result:
+  44 of 125 Sunbird names pass (Kiswahili 14, Luganda 12, Runyankole 8, Rutooro 5, Ateso 5), 39 with audio.
+- Republished (owner approved): commits 1de6085 and 780b413 in ugawildlifevision-app; live files checked 200.
+- Presentation: `report/UgaWildVision_Part2_Presentation.pptx` (12 slides) built by `report/build_deck.py`
+  from the old template (Walusimbi_Namuyiga.pptx); title photos are the team's own UWEC photos.
+- The owner's Internet Download Manager was intercepting the browser test's image/audio loads; closed at the
+  owner's request.
+
+## 2026-11-24 - Entry 16: home page, How-to-use tab, navigation
+
+- Owner's request: QR code on a landing page, "UgaWildVision" clickable to home, proper UX flow, and a
+  "How to use this app" tab. Added a Home view (hero with "Identify an animal" / "Browse animals", language
+  chips, animal of the day, stats incl. animals seen, QR + install card with the browser's install prompt where
+  offered), a How-to-use view (7 steps + safety note), brand link to #home, and hash routes
+  (#home, #animals, #animal/<class>, #identify, #sightings, #help, #about) so the phone's Back button works.
+  Tab bar: Home, Animals, camera, Sightings, How to use; About is linked from Home and How to use.
+- Browser test (localhost): all routes, Back from an animal page, brand link, model "Ready", no console errors.
+- `pwa/serve.py` made multi-threaded (the single-threaded server stalled during tests). Published as d37d616.
+- IDM (owner's download manager) relaunches when the browser loads media; closed again at the owner's request.

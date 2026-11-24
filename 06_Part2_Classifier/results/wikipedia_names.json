@@ -1,0 +1,177 @@
+{
+ "uganda_kob": {
+  "sw": null,
+  "lg": null,
+  "fr": "Cobe de Buffon",
+  "de": "Kob",
+  "nl": "Kob (antilope)"
+ },
+ "bird": {
+  "sw": "Ndege (mnyama)",
+  "lg": null,
+  "fr": "Oiseau",
+  "de": "Vögel",
+  "nl": "Vogels"
+ },
+ "chimpanzee": {
+  "sw": "Sokwe Mtu wa Kawaida",
+  "lg": null,
+  "fr": "Pan troglodytes",
+  "de": "Gemeiner Schimpanse",
+  "nl": "Chimpansee"
+ },
+ "elephant": {
+  "sw": null,
+  "lg": null,
+  "fr": "Éléphant d'Afrique",
+  "de": "Afrikanische Elefanten",
+  "nl": "Afrikaanse olifanten"
+ },
+ "gorilla": {
+  "sw": "Ngagi",
+  "lg": null,
+  "fr": "Gorille",
+  "de": "Gorillas",
+  "nl": "Gorilla's"
+ },
+ "hippo": {
+  "sw": "Kiboko (mnyama)",
+  "lg": null,
+  "fr": "Hippopotamus amphibius",
+  "de": "Flusspferd",
+  "nl": "Nijlpaard"
+ },
+ "warthog": {
+  "sw": null,
+  "lg": null,
+  "fr": "Phacochère commun",
+  "de": "Warzenschwein",
+  "nl": "Knobbelzwijn"
+ },
+ "tiger": {
+  "sw": "Chui milia",
+  "lg": null,
+  "fr": "Tigre",
+  "de": "Tiger",
+  "nl": "Tijger"
+ },
+ "leopard": {
+  "sw": "Chui",
+  "lg": null,
+  "fr": "Léopard",
+  "de": "Leopard",
+  "nl": "Luipaard"
+ },
+ "fox": {
+  "sw": null,
+  "lg": null,
+  "fr": "Renard",
+  "de": "Fuchs (Raubtier)",
+  "nl": "Vossen"
+ },
+ "frog": {
+  "sw": "Chura",
+  "lg": null,
+  "fr": "Anoures",
+  "de": "Froschlurche",
+  "nl": "Kikkers"
+ },
+ "snake": {
+  "sw": "Nyoka",
+  "lg": null,
+  "fr": "Serpentes",
+  "de": "Schlangen",
+  "nl": "Slangen"
+ },
+ "fish": {
+  "sw": "Samaki",
+  "lg": null,
+  "fr": "Poisson",
+  "de": "Fische",
+  "nl": "Vissen (dieren)"
+ },
+ "zebra": {
+  "sw": "Punda milia",
+  "lg": null,
+  "fr": "Zèbre",
+  "de": "Zebras",
+  "nl": "Zebra (dier)"
+ },
+ "monkey": {
+  "sw": null,
+  "lg": null,
+  "fr": "Singe",
+  "de": "Eigentliche Affen",
+  "nl": "Apen"
+ },
+ "crocodile": {
+  "sw": null,
+  "lg": null,
+  "fr": "Crocodile du Nil",
+  "de": "Nilkrokodil",
+  "nl": "Nijlkrokodil"
+ },
+ "tortoise": {
+  "sw": null,
+  "lg": null,
+  "fr": "Tortues terrestres",
+  "de": "Landschildkröten",
+  "nl": "Landschildpadden"
+ },
+ "giraffe": {
+  "sw": "Twiga",
+  "lg": null,
+  "fr": "Girafe",
+  "de": "Giraffen",
+  "nl": "Giraffen"
+ },
+ "rhino": {
+  "sw": "Kifaru",
+  "lg": null,
+  "fr": "Rhinocéros",
+  "de": "Nashörner",
+  "nl": "Neushoorns"
+ },
+ "squirrel": {
+  "sw": "Kindi (mnyama)",
+  "lg": null,
+  "fr": "Sciuridae",
+  "de": "Hörnchen",
+  "nl": "Eekhoorns"
+ },
+ "lion": {
+  "sw": "Simba",
+  "lg": null,
+  "fr": "Lion",
+  "de": "Löwe",
+  "nl": "Leeuw (dier)"
+ },
+ "buffalo": {
+  "sw": "Nyati wa Afrika",
+  "lg": "Mbogo",
+  "fr": "Buffle d'Afrique",
+  "de": "Kaffernbüffel",
+  "nl": "Kafferbuffel"
+ },
+ "cheetah": {
+  "sw": "Duma",
+  "lg": null,
+  "fr": "Guépard",
+  "de": "Gepard",
+  "nl": "Jachtluipaard"
+ },
+ "kudu": {
+  "sw": "Tandala",
+  "lg": null,
+  "fr": "Koudou",
+  "de": null,
+  "nl": null
+ },
+ "hyena": {
+  "sw": "Fisi",
+  "lg": null,
+  "fr": "Hyaenidae",
+  "de": "Hyänen",
+  "nl": "Hyena's"
+ }
+}

@@ -1,0 +1,126 @@
+class,english,language,iso,translated,back_translation,auto_check,audio_file,voice,verified_by_speaker
+uganda_kob,Uganda kob,luganda,lug,Uganda kobye,Uganda has been,fail: back-translation names another thing,,Namuli,no
+uganda_kob,Uganda kob,runyankole,nyn,Uganda teine intaneeti,Uganda has no internet,fail: back-translation names another thing,,Grace,no
+uganda_kob,Uganda kob,rutooro,ttj,Uganda neeha?,What does Uganda offer?,fail: back-translation names another thing,,,no
+uganda_kob,Uganda kob,ateso,teo,Uganda kobu,Uganda has come,fail: back-translation names another thing,,Apio,no
+uganda_kob,Uganda kob,kiswahili,swa,Uganda kob,Uganda is a beautiful country,fail: returned the English name,,,no
+bird,Bird,luganda,lug,Ekinyonyi,The bird,pass,bird_luganda.wav,Namuli,no
+bird,Bird,runyankole,nyn,Ekinyonyi,Birds,pass,bird_runyankole.wav,Grace,no
+bird,Bird,rutooro,ttj,Ekinyonyi,The bird,pass,,,no
+bird,Bird,ateso,teo,Awenan,The prisoners,fail: back-translation names another thing,,Apio,no
+bird,Bird,kiswahili,swa,Ndege,A plane,pass (matches Wikipedia article title),bird_kiswahili.wav,Rehema,no
+chimpanzee,Chimpanzee,luganda,lug,Enkima,The monkey,fail: back-translation names another thing,,Namuli,no
+chimpanzee,Chimpanzee,runyankole,nyn,Chimpanzee,Chimpanzee,fail: returned the English name,,Grace,no
+chimpanzee,Chimpanzee,rutooro,ttj,Chimpanzee,Chimpanzee,fail: returned the English name,,,no
+chimpanzee,Chimpanzee,ateso,teo,Chimpanzee,Chimpanzee,fail: returned the English name,,Apio,no
+chimpanzee,Chimpanzee,kiswahili,swa,Nyani mweusi,Black monkey,fail: back-translation names another thing,,,no
+elephant,African elephant,luganda,lug,Enjovu ey'omu Afirika,African elephant,pass,elephant_luganda.wav,Namuli,no
+elephant,African elephant,runyankole,nyn,Enjovu ya Afirika,African elephant,pass,elephant_runyankole.wav,Grace,no
+elephant,African elephant,rutooro,ttj,Enjangu ya Africa,African leopard,pass,,,no
+elephant,African elephant,ateso,teo,Elefanta loka Africa,African elephant,pass,elephant_ateso.wav,Apio,no
+elephant,African elephant,kiswahili,swa,Ndovu wa Afrika,African elephant,pass,elephant_kiswahili.wav,Rehema,no
+gorilla,Gorilla,luganda,lug,Gorilla,Gorilla,fail: returned the English name,,Namuli,no
+gorilla,Gorilla,runyankole,nyn,Gorilla,Gorilla,fail: returned the English name,,Grace,no
+gorilla,Gorilla,rutooro,ttj,Gorilla,Gorilla,fail: returned the English name,,,no
+gorilla,Gorilla,ateso,teo,Gorilla,Gorilla,fail: returned the English name,,Apio,no
+gorilla,Gorilla,kiswahili,swa,Gorila,Gorilla,pass,gorilla_kiswahili.wav,Rehema,no
+hippo,Hippopotamus,luganda,lug,Enkula (hippopotamus),Hippopotamus (hippopotamus),pass,hippo_luganda.wav,Namuli,no
+hippo,Hippopotamus,runyankole,nyn,Enjoka y'omu maizi,Sea snake,fail: back-translation names another thing,,Grace,no
+hippo,Hippopotamus,rutooro,ttj,Hippopotamus,Hippopotamus,fail: returned the English name,,,no
+hippo,Hippopotamus,ateso,teo,Hippopotamus,Hippopotamus,fail: returned the English name,,Apio,no
+hippo,Hippopotamus,kiswahili,swa,Kiboko,The whip,pass (matches Wikipedia article title),hippo_kiswahili.wav,Rehema,no
+warthog,Warthog,luganda,lug,Entulege ey'omu ttale,Wild ass,fail: back-translation names another thing,,Namuli,no
+warthog,Warthog,runyankole,nyn,Ente y'omusiri,Field goat,fail: back-translation names another thing,,Grace,no
+warthog,Warthog,rutooro,ttj,Ente y'omu kisaka,Wild cow,fail: back-translation names another thing,,,no
+warthog,Warthog,ateso,teo,Warthog erai etunganan loepol noi loka Africa,The warthog is the largest wild pig in Africa,"fail: a sentence, not a name",,Apio,no
+warthog,Warthog,kiswahili,swa,Ngiri,thousand,fail: back-translation names another thing,,,no
+tiger,Tiger,luganda,lug,Ttiiga,Tiger,pass,tiger_luganda.wav,Namuli,no
+tiger,Tiger,runyankole,nyn,Tiger,Tiger,fail: returned the English name,,Grace,no
+tiger,Tiger,rutooro,ttj,Tiger,Tiger,fail: returned the English name,,,no
+tiger,Tiger,ateso,teo,Ekingok loemwaka,A barking dog,fail: back-translation names another thing,,Apio,no
+tiger,Tiger,kiswahili,swa,Simba,Lion,fail: back-translation names another thing,,,no
+leopard,Leopard,luganda,lug,Empologoma,The lion,fail: back-translation names another thing,,Namuli,no
+leopard,Leopard,runyankole,nyn,Ekibwe,The rock,fail: back-translation names another thing,,Grace,no
+leopard,Leopard,rutooro,ttj,Ekikere,The frog,fail: back-translation names another thing,,,no
+leopard,Leopard,ateso,teo,Leopard,Leopard,fail: returned the English name,,Apio,no
+leopard,Leopard,kiswahili,swa,Chui,Leopard,pass (matches Wikipedia article title),leopard_kiswahili.wav,Rehema,no
+fox,Fox,luganda,lug,Enkoko,Chicken,fail: back-translation names another thing,,Namuli,no
+fox,Fox,runyankole,nyn,Fox,Fox,fail: returned the English name,,Grace,no
+fox,Fox,rutooro,ttj,Fox,Fox,fail: returned the English name,,,no
+fox,Fox,ateso,teo,Fox,Fox,fail: returned the English name,,Apio,no
+fox,Fox,kiswahili,swa,Mbweha,The hyena,fail: back-translation names another thing,,,no
+frog,Frog or toad,luganda,lug,Ekikere oba akanyonyi,A frog or a bird,pass,frog_luganda.wav,Namuli,no
+frog,Frog or toad,runyankole,nyn,Ekikere nainga ekitooro,A frog or toad,pass,frog_runyankole.wav,Grace,no
+frog,Frog or toad,rutooro,ttj,Ekikere rundi ekitooro,A frog or a toad,pass,,,no
+frog,Frog or toad,ateso,teo,Ekuruk arai bo toad,A frog or toad,pass,frog_ateso.wav,Apio,no
+frog,Frog or toad,kiswahili,swa,Chura au todi,Chura or todi,fail: back-translation names another thing,,,no
+snake,Snake,luganda,lug,Omusota,Snake,pass,snake_luganda.wav,Namuli,no
+snake,Snake,runyankole,nyn,Enjoka,Snake,pass,snake_runyankole.wav,Grace,no
+snake,Snake,rutooro,ttj,Enjoka,Snake,pass,,,no
+snake,Snake,ateso,teo,Ejok,Good,fail: back-translation names another thing,,Apio,no
+snake,Snake,kiswahili,swa,Nyoka,Snake,pass (matches Wikipedia article title),snake_kiswahili.wav,Rehema,no
+fish,Fish,luganda,lug,Ebyennyanja,Fisheries,pass,fish_luganda.wav,Namuli,no
+fish,Fish,runyankole,nyn,Ebyenyanja,Fisheries,pass,fish_runyankole.wav,Grace,no
+fish,Fish,rutooro,ttj,Ebyenyanja,Fisheries,pass,,,no
+fish,Fish,ateso,teo,Agaria,Fishermen,pass,fish_ateso.wav,Apio,no
+fish,Fish,kiswahili,swa,Samaki,Fish,pass (matches Wikipedia article title),fish_kiswahili.wav,Rehema,no
+zebra,Zebra,luganda,lug,Zebra,Zebra,fail: returned the English name,,Namuli,no
+zebra,Zebra,runyankole,nyn,Zebra,Zebra,fail: returned the English name,,Grace,no
+zebra,Zebra,rutooro,ttj,Zebra,Zebra,fail: returned the English name,,,no
+zebra,Zebra,ateso,teo,Ejaasi Zebra keda aiboisio nuegelegela nuka akwap,Zebras have different habitats in the wild,"fail: a sentence, not a name",,Apio,no
+zebra,Zebra,kiswahili,swa,Punda milia,zebra,pass (matches Wikipedia article title),zebra_kiswahili.wav,Rehema,no
+monkey,Monkey,luganda,lug,Enkima,The monkey,pass,monkey_luganda.wav,Namuli,no
+monkey,Monkey,runyankole,nyn,Enkima,The monkey,pass,monkey_runyankole.wav,Grace,no
+monkey,Monkey,rutooro,ttj,Enkima,Chimpanzee,fail: back-translation names another thing,,,no
+monkey,Monkey,ateso,teo,Emukule,The barkcloth,fail: back-translation names another thing,,Apio,no
+monkey,Monkey,kiswahili,swa,Nyani,Monkey,pass,monkey_kiswahili.wav,Rehema,no
+crocodile,Crocodile,luganda,lug,Ggonya,Ggonya,fail: back-translation names another thing,,Namuli,no
+crocodile,Crocodile,runyankole,nyn,Ekikere,The frog,fail: back-translation names another thing,,Grace,no
+crocodile,Crocodile,rutooro,ttj,Ekikere,The frog,fail: back-translation names another thing,,,no
+crocodile,Crocodile,ateso,teo,Ekwam,The air,fail: back-translation names another thing,,Apio,no
+crocodile,Crocodile,kiswahili,swa,Mamba,Alligator,fail: back-translation names another thing,,,no
+tortoise,Tortoise,luganda,lug,Akasaale,A spear,fail: back-translation names another thing,,Namuli,no
+tortoise,Tortoise,runyankole,nyn,Enkobe,The leopard,fail: back-translation names another thing,,Grace,no
+tortoise,Tortoise,rutooro,ttj,Enkobe,The gorilla,fail: back-translation names another thing,,,no
+tortoise,Tortoise,ateso,teo,Etapit ekingok alosit motimot,The dog moves slowly,fail: back-translation names another thing,,Apio,no
+tortoise,Tortoise,kiswahili,swa,Kobe,Kobe,fail: back-translation names another thing,,,no
+giraffe,Giraffe,luganda,lug,Enkula,The structure,fail: back-translation names another thing,,Namuli,no
+giraffe,Giraffe,runyankole,nyn,Enjoka,Snake,fail: back-translation names another thing,,Grace,no
+giraffe,Giraffe,rutooro,ttj,Ente y'omusiri,A field cow,fail: back-translation names another thing,,,no
+giraffe,Giraffe,ateso,teo,Ejai Giraffe,There is a Giraffe,pass,giraffe_ateso.wav,Apio,no
+giraffe,Giraffe,kiswahili,swa,Twiga,The elephant,pass (matches Wikipedia article title),giraffe_kiswahili.wav,Rehema,no
+rhino,Rhinoceros,luganda,lug,Enkula eyitibwa Rhinoceros,The animal is called the Rhinoceros,pass,rhino_luganda.wav,Namuli,no
+rhino,Rhinoceros,runyankole,nyn,Rhinoceros,Rhinoceros,fail: returned the English name,,Grace,no
+rhino,Rhinoceros,rutooro,ttj,Rhinoceros,Rhinoceros,fail: returned the English name,,,no
+rhino,Rhinoceros,ateso,teo,Rhinoceros,Rhinoceros,fail: returned the English name,,Apio,no
+rhino,Rhinoceros,kiswahili,swa,Kifaru,The Rhino,pass (matches Wikipedia article title),rhino_kiswahili.wav,Rehema,no
+squirrel,Squirrel,luganda,lug,Ekikere,A frog,fail: back-translation names another thing,,Namuli,no
+squirrel,Squirrel,runyankole,nyn,Squirrels,Squirrels,pass,squirrel_runyankole.wav,Grace,no
+squirrel,Squirrel,rutooro,ttj,Squirrel,Squirrel,fail: returned the English name,,,no
+squirrel,Squirrel,ateso,teo,Ejai squirrel,There is a squirrel,pass,squirrel_ateso.wav,Apio,no
+squirrel,Squirrel,kiswahili,swa,Panya wa msituni,Forest mice,fail: back-translation names another thing,,,no
+lion,Lion,luganda,lug,Empologoma,The lion,pass,lion_luganda.wav,Namuli,no
+lion,Lion,runyankole,nyn,Entare,The lion,pass,lion_runyankole.wav,Grace,no
+lion,Lion,rutooro,ttj,Entale,The war,fail: back-translation names another thing,,,no
+lion,Lion,ateso,teo,Ekingok,Dog,fail: back-translation names another thing,,Apio,no
+lion,Lion,kiswahili,swa,Simba,Lion,pass (matches Wikipedia article title),lion_kiswahili.wav,Rehema,no
+buffalo,African buffalo,luganda,lug,Enjaza y'omu Afirika,African fish eagle,pass,buffalo_luganda.wav,Namuli,no
+buffalo,African buffalo,runyankole,nyn,Enyamaishwa y'omwirungu,Wild animal,fail: back-translation names another thing,,Grace,no
+buffalo,African buffalo,rutooro,ttj,Ente y'omu kisaka,Wild animal,fail: back-translation names another thing,,,no
+buffalo,African buffalo,ateso,teo,African buffalo,African buffalo,fail: returned the English name,,Apio,no
+buffalo,African buffalo,kiswahili,swa,Nyati wa Afrika,African buffalo,pass (matches Wikipedia article title),buffalo_kiswahili.wav,Rehema,no
+cheetah,Cheetah,luganda,lug,Cheetah kye kiwuka ekirya ennyama,A cheetah is a carnivorous animal,"fail: a sentence, not a name",,Namuli,no
+cheetah,Cheetah,runyankole,nyn,Cheetah,Cheetah,fail: returned the English name,,Grace,no
+cheetah,Cheetah,rutooro,ttj,Cheetah,Cheetah,fail: returned the English name,,,no
+cheetah,Cheetah,ateso,teo,Cheetah,Cheetah,fail: returned the English name,,Apio,no
+cheetah,Cheetah,kiswahili,swa,Chui,Leopard,fail: back-translation names another thing,,,no
+kudu,Kudu,luganda,lug,Kudu kye ki?,What is kudu?,pass,kudu_luganda.wav,Namuli,no
+kudu,Kudu,runyankole,nyn,Kudu,South,fail: returned the English name,,Grace,no
+kudu,Kudu,rutooro,ttj,Kudu,Kudu,fail: returned the English name,,,no
+kudu,Kudu,ateso,teo,Kide,East,fail: back-translation names another thing,,Apio,no
+kudu,Kudu,kiswahili,swa,Kudu ni mji wa Kenya katika Kaunti ya Kisii,Kudu is a town in Kenya in Kisii County,"fail: a sentence, not a name",,Rehema,no
+hyena,Hyena,luganda,lug,Empologoma,The lion,fail: back-translation names another thing,,Namuli,no
+hyena,Hyena,runyankole,nyn,Enyamaishwa,Animals,fail: back-translation names another thing,,Grace,no
+hyena,Hyena,rutooro,ttj,Hyena,Hyena,fail: returned the English name,,,no
+hyena,Hyena,ateso,teo,Hyena,Hyena,fail: returned the English name,,Apio,no
+hyena,Hyena,kiswahili,swa,Fisi,Hyena,pass (matches Wikipedia article title),hyena_kiswahili.wav,Rehema,no
