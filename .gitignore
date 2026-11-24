@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Office lock / temp files (created while a document is open)
+~$*
+*.tmp
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Secrets: never commit API keys
+.env
+*.key
