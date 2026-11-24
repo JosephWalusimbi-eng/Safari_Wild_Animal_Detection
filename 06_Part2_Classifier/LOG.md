@@ -263,3 +263,16 @@ close, clear photo." (1 in 5 = UWEC top-1 0.19 ± 0.03 over 3 seeds, n = 47; Ent
 - Browser test (localhost): all routes, Back from an animal page, brand link, model "Ready", no console errors.
 - `pwa/serve.py` made multi-threaded (the single-threaded server stalled during tests). Published as d37d616.
 - IDM (owner's download manager) relaunches when the browser loads media; closed again at the owner's request.
+
+## 2026-11-24 - Entry 17: short report, plain diagrams, UWEC wording
+
+- "Entebbe images" renamed "the UWEC dataset" everywhere (owner: UWEC and Entebbe are the same place); the
+  report states this and that the four sources describe who took each image, not a second location.
+- Short version added without touching the full report: `python report/build_report.py --short` writes
+  `report/UgaWildVision_Part2_Report_Short.docx` (+ PDF, 35 pages; full report stays 53 pages). It has a
+  ~180-word abstract, condensed related work (all citations kept), and drops repeated figures/tables, the
+  label-correction and dataset-parameter tables, the full translated-names tables, model-size and
+  engineering/literature-comparison sections, and the appendix. `report/update_fields.ps1 <name>` refreshes
+  either document and exports its PDF.
+- Block diagrams (approach, app flow) redrawn as plain black boxes and arrows, no colour; used in both reports
+  and on the Methodology slide.

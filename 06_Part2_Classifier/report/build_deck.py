@@ -204,7 +204,7 @@ notes(s, "AI here means an image-classification model that runs inside the brows
 # ---------------- 5 Methodology
 s = S[4]
 fill(shp(s, "Text 0"), ["Methodology"])
-fill(shp(s, "Text 1"), [[("Data  ", True), ("Part 1 park video crops plus 5,187 Entebbe images; source of every image recorded", False)]])
+fill(shp(s, "Text 1"), [[("Data  ", True), ("Part 1 park video crops plus the 5,187-image UWEC dataset; source of every image recorded", False)]])
 fill(shp(s, "Text 2"), [[("Labels  ", True), ("Mislabelled folders fixed; 26 classes; split by session or photo group", False)]])
 fill(shp(s, "Text 3"), [[("Model  ", True), ("YOLOv8n-cls, 1.47 M parameters, ImageNet-pretrained, fine-tuned", False)]])
 fill(shp(s, "Text 4"), [[("App  ", True), ("ONNX model in an offline web app; names from Sunbird AI; facts and photos", False)]])
@@ -215,7 +215,7 @@ pic.left, pic.top, pic.width, pic.height = Emu(6675120), Emu(1417320), Emu(52120
 put_image(s, "Annotated chimpanzee frame", IMG / "fig_pipeline.png", "fit", "Annotated chimpanzee frame frame")
 cap = shp(s, "Text 6"); cap.left, cap.width = Emu(6675120), Emu(5212080); cap.top = Emu(pic.top + pic.height + 91440)
 fill(shp(s, "Text 6"), ["From data sources to the phone app"])
-notes(s, "Only 47 of the Entebbe images are our own phone photos from UWEC; the rest come from public image "
+notes(s, "UWEC is in Entebbe. Only 47 of the 5,187 images in our UWEC dataset are our own phone photos; the rest come from public image "
          "collections, so we used them for training only and kept our own 47 photos as the real-world test.")
 
 # ---------------- 6 Experimental setup

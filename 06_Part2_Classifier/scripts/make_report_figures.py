@@ -33,63 +33,69 @@ def save(fig, out, name):
     print("wrote", name)
 
 
-def box(ax, x, y, w, h, text, fc="#f4f4f4"):
-    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02,rounding_size=0.08",
-                                fc=fc, ec="#333333", lw=1.0))
-    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=10, color=INK, wrap=True)
+def box(ax, x, y, w, h, text):
+    """Plain block: white fill, thin black border, square corners, black text."""
+    ax.add_patch(plt.Rectangle((x, y), w, h, fc="white", ec="black", lw=1.0))
+    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=11, color="black")
 
 
-def arrow(ax, x1, y1, x2, y2):
-    ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
-                arrowprops=dict(arrowstyle="-|>", color="#333333", lw=1.1))
+def arrow(ax, x1, y1, x2, y2, label=None):
+    """Straight black arrow; optional small label beside it."""
+    ax.annotate("", xy=(x2, y2), xytext=(x1, y1), arrowprops=dict(arrowstyle="-|>", color="black", lw=1.0))
+    if label:
+        ax.text((x1 + x2) / 2 + 0.08, (y1 + y2) / 2, label, fontsize=10, va="center")
+
+
+def _canvas(w, h):
+    fig, ax = plt.subplots(figsize=(w, h))
+    ax.set_xlim(0, w); ax.set_ylim(0, h); ax.axis("off"); ax.grid(False)
+    return fig, ax
 
 
 def diagram_pipeline(out):
-    fig, ax = plt.subplots(figsize=(9.5, 6.2))
-    ax.set_xlim(0, 10); ax.set_ylim(0, 7); ax.axis("off"); ax.grid(False)
-    w, h = 2.7, 0.95
-    # row 1: inputs
-    box(ax, 0.3, 5.7, w, h, "Part 1 Safari dataset\n1,220 frames, 3,909 boxes\n(Zenodo, CC BY 4.0)")
-    box(ax, 3.65, 5.7, w, h, "Entebbe zips\n5,187 images in\nanimal folders")
-    box(ax, 7.0, 5.7, w, h, "Team phone photos\nat UWEC (47)")
-    # row 2: processing
-    box(ax, 0.3, 4.1, w, h, "Box crops\n(+15% context,\nskip boxes < 32 px)")
-    box(ax, 3.65, 4.1, w, h, "Manifest: source per image,\nlabel corrections,\nduplicates, EXIF rotation")
-    box(ax, 7.0, 4.1, w, h, "Held out as\nuwec_test\n(never trained on)", fc="#fde9e0")
-    arrow(ax, 1.65, 5.7, 1.65, 5.05); arrow(ax, 5.0, 5.7, 5.0, 5.05); arrow(ax, 8.35, 5.7, 8.35, 5.05)
-    # row 3: dataset
-    box(ax, 1.9, 2.5, 4.9, h, "cls_v1: 26 classes, leakage-safe split by session/group,\n"
-        "near-duplicate removal (dHash <= 4 bits), caps 400/60/60\n"
-        "train 3,636 | val 553 | test 559")
-    arrow(ax, 1.65, 4.1, 3.0, 3.45); arrow(ax, 5.0, 4.1, 4.6, 3.45)
-    # row 4: training / selection / export
-    box(ax, 0.3, 0.6, 2.9, h, "Train YOLOv8n-cls (3 seeds)\nand YOLOv8s-cls (1 seed)\n224 px, AdamW, cosine LR")
-    box(ax, 3.55, 0.6, 2.9, h, "Select by validation top-1\n-> v1_n_seed2\nEvaluate: test + uwec_test")
-    box(ax, 6.8, 0.6, 2.9, h, "Export ONNX (5.9 MB)\npreprocessing check 606/606\n-> PWA (offline, on phone)", fc="#e3eefb")
-    arrow(ax, 4.35, 2.5, 1.75, 1.55); arrow(ax, 3.2, 1.07, 3.55, 1.07); arrow(ax, 6.45, 1.07, 6.8, 1.07)
-    arrow(ax, 8.35, 4.1, 5.6, 1.55)
+    """Proposed approach as a top-to-bottom flow (plain boxes and arrows)."""
+    fig, ax = _canvas(8, 6.3)
+    W, H, X, top, step = 5.6, 0.55, 0.9, 5.6, 0.86
+    texts = ["Data sources: Part 1 park video frames + UWEC dataset",
+             "Audit: record the source and correct label of every image",
+             "Build dataset: 26 classes, split by session or photo group",
+             "Train YOLOv8 classifiers (3 random seeds)",
+             "Select the model on validation; evaluate on test sets",
+             "Export the model (ONNX) to the phone app",
+             "Offline field guide app for visitors"]
+    ys = [top - k * step for k in range(len(texts))]
+    for t, y in zip(texts, ys):
+        box(ax, X, y, W, H, t)
+    for y1, y2 in zip(ys[:-1], ys[1:]):
+        arrow(ax, X + W / 2, y1, X + W / 2, y2 + H)
+    # the team's own UWEC phone photos skip training and are used only for the real-world test
+    bx, bw = 6.75, 1.2
+    box(ax, bx, ys[2] - 0.15, bw, H + 0.3, "47 UWEC\nphone photos\n(test only)")
+    ax.texts[-1].set_fontsize(9)
+    ym = ys[4] + H / 2
+    ax.plot([bx + bw / 2, bx + bw / 2], [ys[2] - 0.15, ym], color="black", lw=1.0)
+    arrow(ax, bx + bw / 2, ym, X + W, ym)
     save(fig, out, "fig_pipeline.png")
 
 
 def diagram_pwa(out):
-    fig, ax = plt.subplots(figsize=(9.5, 4.6))
-    ax.set_xlim(0, 10); ax.set_ylim(0, 5); ax.axis("off"); ax.grid(False)
-    w, h = 1.75, 1.0
-    xs = [0.15, 2.1, 4.05, 6.0, 7.95]
-    labels = ["Camera or\ngallery photo", "Decode +\nEXIF rotation", "Resize short side\nto 224, centre\ncrop 224x224, /255",
-              "ONNX Runtime Web\n(WASM, 1 thread)\nYOLOv8n-cls", "Softmax over\n26 classes,\ntop-3"]
-    for x, t in zip(xs, labels):
-        box(ax, x, 3.3, w, h, t)
-    for a, b in zip(xs[:-1], xs[1:]):
-        arrow(ax, a + w, 3.8, b, 3.8)
-    box(ax, 5.2, 1.5, 2.3, 1.0, "top-1 >= 0.7 ?", fc="#fff6dc")
-    arrow(ax, 8.8, 3.3, 6.9, 2.5)
-    box(ax, 7.9, 1.5, 2.0, 1.0, "Show species, facts,\nsafety note,\nlow-data warning", fc="#e3eefb")
-    box(ax, 2.8, 1.5, 2.0, 1.0, "\"Not sure\": ask for\na closer, clearer photo", fc="#fde9e0")
-    arrow(ax, 7.5, 2.0, 7.9, 2.0); ax.text(7.7, 2.12, "yes", ha="center", fontsize=9)
-    arrow(ax, 5.2, 2.0, 4.8, 2.0); ax.text(5.0, 2.12, "no", ha="center", fontsize=9)
-    box(ax, 0.15, 0.1, 9.75, 0.8, "Service worker caches the page, model.onnx (5.9 MB), labels, species.json and the WASM "
-        "runtime,\nso the app works offline. Photos never leave the phone.", fc="#f4f4f4")
+    """How the app answers one photo (plain boxes and arrows)."""
+    fig, ax = _canvas(8, 5.6)
+    W, H, X = 5.0, 0.55, 1.5
+    texts = ["Visitor takes or chooses a photo", "Rotate, resize and crop to 224 x 224",
+             "Classifier runs on the phone", "Confidence of the best answer at least 0.7?"]
+    ys = [4.9 - k * 0.86 for k in range(len(texts))]
+    for t, y in zip(texts, ys):
+        box(ax, X, y, W, H, t)
+    for y1, y2 in zip(ys[:-1], ys[1:]):
+        arrow(ax, X + W / 2, y1, X + W / 2, y2 + H)
+    yb = ys[-1] - 1.25
+    box(ax, 0.3, yb, 3.4, 0.75, "Show the animal: name in\nchosen language, facts, safety")
+    box(ax, 4.3, yb, 3.4, 0.75, "Say \"not sure\" and ask for\na closer, clearer photo")
+    arrow(ax, X + 1.0, ys[-1], 2.0, yb + 0.75, "yes")
+    arrow(ax, X + W - 1.0, ys[-1], 6.0, yb + 0.75, "no")
+    box(ax, 0.3, yb - 1.05, 3.4, H, "Visitor can record a sighting")
+    arrow(ax, 2.0, yb, 2.0, yb - 1.05 + H)
     save(fig, out, "fig_pwa.png")
 
 
@@ -105,7 +111,7 @@ def fig_sources(root, index, out):
     for i, v in enumerate(vals[::-1]):
         a1.text(v + 40, i, f"{v:,}", va="center", fontsize=10, color=INK)
     a1.set_xlabel("images"); a1.set_xlim(0, max(vals) * 1.18)
-    a1.set_title("(a) Sources of the 5,187 Entebbe images", fontsize=11)
+    a1.set_title("(a) Sources of the 5,187 UWEC dataset images", fontsize=11)
     a1.grid(axis="y", visible=False)
     idx = rd(index)
     c = collections.Counter((r["split"], r["origin"]) for r in idx)

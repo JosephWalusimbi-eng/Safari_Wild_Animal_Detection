@@ -7,6 +7,7 @@ Figures: ..\\results\\... (from make_figures.py / make_compare_figure.py) and fi
 After building, update_fields.ps1 lets Word fill in the contents, list of tables and list of figures.
 """
 import re
+import sys
 from pathlib import Path
 from docx import Document
 from docx.enum.section import WD_SECTION
@@ -19,7 +20,8 @@ from docx.shared import Pt, Cm, RGBColor
 HERE = Path(__file__).resolve().parent
 P2 = HERE.parent
 FIG = HERE / "figures"
-OUT = HERE / "UgaWildVision_Part2_Report.docx"
+SHORT = "--short" in sys.argv          # python build_report.py --short -> shorter version, separate file
+OUT = HERE / ("UgaWildVision_Part2_Report_Short.docx" if SHORT else "UgaWildVision_Part2_Report.docx")
 FONT = "Times New Roman"
 BLACK = RGBColor(0, 0, 0)
 LANG_CSV = P2 / "results" / "sunbird_names.csv"
@@ -214,7 +216,7 @@ add(("p", "Tourism earns Uganda more than USD 1.28 billion a year and rests larg
      "network access cannot be assumed [@datareportal]. There is no freely available tool that lets a visitor "
      "photograph an animal at a Ugandan wildlife site and receive, offline, the species name, short facts, a "
      "safety note and local-language names. Building one with AI raises a technical problem: the only labelled "
-     "data available are Part 1 park video frames and about 5,200 images shared by the team from Entebbe, most "
+     "data available are Part 1 park video frames and about 5,200 images in the team's UWEC (Entebbe) dataset, most "
      "of which turned out to come from public image collections rather than from the team's own visits "
      "(Section 2.2), and there is no time to draw bounding boxes. The question is therefore whether a small "
      "classifier trained mostly on such images can identify animals in real visitors' phone photos at a "
@@ -224,7 +226,7 @@ add(("p", "The main objective is to develop and honestly evaluate an AI-based sm
      "Ugandan wildlife species from a visitor's photo, to improve the experience of wildlife tourism in Uganda. "
      "The specific objectives are to:"))
 add(("num", [
-    "build a leakage-safe image-classification dataset from the Part 1 frames and the Entebbe images, with "
+    "build a leakage-safe image-classification dataset from the Part 1 frames and the UWEC dataset images, with "
     "the source of every image recorded and mislabelled folders corrected;",
     "train small YOLOv8 classification models suitable for phones and select one using the validation set only;",
     "measure accuracy both on an in-distribution test set and on the team's own phone photos taken as "
@@ -266,23 +268,25 @@ add(("p", "The approach has five stages ({F:pipeline}): (1) audit the inputs and
      "web app. Image classification was chosen over detection because it needs only one folder of photos per "
      "species and no boxes. The trade-off is that a classifier names one animal per photo and works best when "
      "the animal fills much of the frame."))
-add(("fig", "pipeline", FIG / "fig_pipeline.png", "Overview of the proposed approach, from data sources to the phone app.", 15.5))
+add(("fig", "pipeline", FIG / "fig_pipeline.png", "Overview of the proposed approach, from data sources to the phone app.", 15.0))
 
 add(("h2", "2.2 Data sources and audit"))
 add(("p", "Two inputs were used. The first is the Part 1 Safari dataset: 1,220 video frames from Ugandan "
      "parks with 3,909 boxes in seven classes [@nestler,@z_data]. Each box was cut out as a crop with 15% extra context "
-     "on each side; boxes shorter than 32 pixels were skipped. The second is three zip files of Entebbe "
+     "on each side; boxes shorter than 32 pixels were skipped. The second is the team's UWEC dataset: three zip files of "
      "images in folders by animal. One zip was an exact subset of another and was not used, leaving 5,187 "
      "images. A script (build_manifest.py) recorded for each image its size, camera data (EXIF), MD5 hash, "
      "folder, corrected class and likely source. The file evidence showed four sources ({T:sources})."))
-add(("tab", "sources", "Sources of the 5,187 Entebbe images, as recorded in manifest.csv.",
+add(("tab", "sources", "Sources of the 5,187 images in the UWEC dataset, as recorded in manifest.csv.",
      ["Source", "Images", "Evidence"],
      [["images.cv", "3,930", "meta.json files from images.cv; 256 x 256 pixels; already split 70/15/15"],
       ["iNaturalist-style", "1,016", "File names in the iNaturalist download format (Genus_species_<id>), 500 px"],
       ["Web downloads", "194", "Browser download names (\"images (3).jpg\"); one Shutterstock watermark"],
       ["Team phone photos (UWEC)", "47", "Phone photos through enclosure fences; Samsung originals and WhatsApp copies"]],
      [4.0, 1.8, 10.0]))
-add(("p", "Only the 47 team photos can be described as taken at UWEC. The web-sourced images were used for "
+add(("p", "UWEC is in Entebbe, so the dataset and the test photos come from the same site; the four "
+     "sources in {T:sources} describe who took each image and where it was published, not a second place. "
+     "Only the 47 team photos can be described as taken at UWEC. The web-sourced images were used for "
      "internal training only and are never redistributed, in the app or in this report; no figure in this "
      "report contains a web-sourced photo. Species was not used as evidence of source, because UWEC also "
      "keeps non-native animals such as tigers."))
@@ -290,7 +294,7 @@ add(("h2", "2.3 Label corrections"))
 add(("p", "Folder names were not reliable labels. Contact sheets of every folder were inspected by eye and "
      "the corrections in {T:labels} were applied in the manifest. Two Samsung originals were stored rotated "
      "with the rotation in their EXIF data; every script applies the EXIF rotation before use."))
-add(("tab", "labels", "Label corrections applied to the Entebbe images.",
+add(("tab", "labels", "Label corrections applied to the UWEC dataset.",
      ["Folder", "Problem found", "Action"],
      [["buffaloes (5 files)", "Pictures of zebras", "Relabelled zebra"],
       ["buffaloes (2 files)", "American bison; domestic/water buffalo", "Dropped"],
@@ -380,7 +384,7 @@ add(("p", "UgaWildVision is a static PWA ({F:pwa}). The user takes a photo or pi
      "never leave the phone. The app is published over HTTPS on GitHub Pages, which phones require for "
      "camera access and offline use. For a tourist, this means the app can be opened from a link or QR code "
      "at the entrance, installed in seconds, and then used anywhere in the site without a network."))
-add(("fig", "pwa", FIG / "fig_pwa.png", "Inference flow inside the UgaWildVision progressive web app.", 15.5))
+add(("fig", "pwa", FIG / "fig_pwa.png", "How the UgaWildVision app answers a photo.", 14.0))
 add(("p", "Around the classifier, the app is designed as a pocket field guide for visitors ({F:appscreens}). An "
      "Animals tab shows every species as a photo card with search and group filters (mammals, birds, reptiles, "
      "amphibians, fish). Each animal has a page with a large photo, its name in the chosen language with a "
@@ -475,7 +479,7 @@ add(("tab", "dsparams", "Dataset build parameters (build_cls_dataset.py and make
      [["Classes", "26 (20 regular, 5 low-data, 1 other)"],
       ["Crop context (Part 1 boxes)", "15% each side; boxes under 32 px skipped"],
       ["Stored image size", "Longest side at most 512 px"],
-      ["Group split for Entebbe images", "80 / 10 / 10 by fixed hash"],
+      ["Group split for UWEC dataset images", "80 / 10 / 10 by fixed hash"],
       ["Near-duplicate threshold", "64-bit dHash, 4 bits or fewer"],
       ["Caps per class", "400 train / 60 val / 60 test"],
       ["Final size (cls_v1)", "3,636 train / 553 val / 559 test / 47 uwec_test"],
@@ -614,13 +618,13 @@ add(("p", "{F:testuwec} sets the two test sets side by side for each v1 run. All
 add(("fig", "testuwec", P2 / "results/v1/figures/test_vs_uwec.png", "Top-1 accuracy on the test set and on UWEC phone photos for each v1 run.", 14.0))
 add(("fig", "runmetrics", FIG / "fig_metrics_per_run.png", "Top-1, top-5 and macro accuracy for each v1 run: (a) test set, (b) UWEC phone photos.", 15.5))
 add(("h2", "5.2 What the training data look like"))
-add(("p", "{F:sources} shows where the data come from. Three-quarters of the Entebbe images are 256-pixel "
+add(("p", "{F:sources} shows where the data come from. Three-quarters of the UWEC dataset images are 256-pixel "
      "images.cv pictures, and only 47 are the team's phone photos. In the built dataset, Part 1 video crops "
      "and images.cv pictures make up most of the training set, and the UWEC test set consists entirely of a "
      "source that never appears in training. {F:splitcounts} shows the per-class counts: the low-data "
      "classes have more UWEC test photos than training images (buffalo 1 training image against 9 test "
      "photos; lion 6 against 9), so they cannot be expected to work."))
-add(("fig", "sources", FIG / "fig_sources.png", "(a) Sources of the Entebbe images; (b) composition of cls_v1 by split and origin.", 15.5))
+add(("fig", "sources", FIG / "fig_sources.png", "(a) Sources of the UWEC dataset images; (b) composition of cls_v1 by split and origin.", 15.5))
 add(("fig", "splitcounts", FIG / "fig_split_counts.png", "Images per class and split in cls_v1.", 14.0))
 add(("h2", "5.3 Where the errors go"))
 add(("p", "{T:errors} lists what v1_n_seed2 predicted for each UWEC class. The errors follow the training "
@@ -730,7 +734,7 @@ add(("p", "The most realistic near-term use is therefore as a guide's assistant 
 add(("h1", "7. Limitations"))
 add(("h2", "7.1 Data"))
 add(("bul", [
-    "Only 47 of 5,187 Entebbe images are the team's own photos; the rest come from images.cv, iNaturalist-style "
+    "Only 47 of the 5,187 UWEC dataset images are the team's own photos; the rest come from images.cv, iNaturalist-style "
     "downloads and the web. Those may be used for internal training only and cannot be published or "
     "redistributed.",
     "Five classes are low-data (buffalo has one training image), and most of their photos are UWEC test photos.",
@@ -813,6 +817,213 @@ add(("num", [
     "Try stronger pretrained features, such as BioCLIP [@bioclip], and confidence calibration under shift [@guo,@ovadia].",
     "Build the planned Android app from the same ONNX model."]))
 
+# ----------------------------------------------------------------------------- trimming (shorter report)
+# The full material above is kept for reference; these steps remove repetition and side details,
+# then renumber the headings.
+def _drop_section(title):
+    """Remove a heading and everything under it up to the next heading of the same or higher level."""
+    lvl = {"h1": 1, "h2": 2, "h3": 3}
+    i = next(k for k, it in enumerate(C) if it[0] in lvl and it[1].split(" ", 1)[1] == title)
+    j = i + 1
+    while j < len(C) and not (C[j][0] in lvl and lvl[C[j][0]] <= lvl[C[i][0]]):
+        j += 1
+    del C[i:j]
+
+
+def _drop_items(*keys):
+    C[:] = [it for it in C if not (it[0] in ("fig", "tab") and it[1] in keys)]
+
+
+def _replace_p(start, new):
+    k = [n for n, it in enumerate(C) if it[0] == "p" and it[1].startswith(start)]
+    assert len(k) == 1, (start, len(k))
+    if new is None:
+        del C[k[0]]
+    else:
+        C[k[0]] = ("p", new)
+
+
+def _replace_list(first_item_start, new_items):
+    k = [n for n, it in enumerate(C) if it[0] in ("bul", "num") and it[1][0].startswith(first_item_start)]
+    assert len(k) == 1, first_item_start
+    C[k[0]] = (C[k[0]][0], new_items)
+
+
+def _apply_trim():
+    _drop_section("Contributions")
+    _drop_section("Label corrections")
+    _drop_section("Dataset parameters")
+    _drop_section("Confusion matrices")
+    _drop_section("Confidence threshold")
+    _drop_section("Model size")
+    C[:] = [it for it in C if not (it[0] == "tab" and it[1] == "sources")]   # keep the sources figure
+    _drop_items("qr", "loss", "pctest", "pcuwec", "langnames", "visitornames", "runmetrics",
+                "splitcounts", "thresh", "v1v2class", "v1v2val")
+
+    _replace_p("Splits were made by recording session or photo group",
+        "Splits were made by recording session or photo group, never by single image, because near-identical "
+        "images on both sides of a split inflate test scores [@kapoor]. The rules are summarised in {T:splitrules}.")
+    _replace_p("Two inputs were used.",
+        "Two inputs were used. The first is the Part 1 Safari dataset: 1,220 video frames from Ugandan parks with "
+        "3,909 boxes in seven classes [@nestler,@z_data]. Each box was cut out as a crop with 15% extra context on "
+        "each side; boxes shorter than 32 pixels were skipped. The second is the team's UWEC dataset of 5,187 images "
+        "in folders by animal. A script (build_manifest.py) recorded each image's size, camera data, hash, folder, "
+        "class and source. Some folders were mislabelled (for example zebras in the buffalo folder); these were "
+        "corrected after a visual check, and exact duplicates were removed.")
+    _replace_p("UWEC is in Entebbe, so the dataset",
+        "UWEC is in Entebbe, so the dataset and the test photos come from the same site. The file evidence shows, "
+        "however, that only 47 images are the team's own phone photos; the rest are copies from public image "
+        "collections. The 47 team photos were therefore kept apart as the real-world test set, and the other images "
+        "were used for training only and are not redistributed.")
+    _replace_p("The second experiment (v2) asked",
+        "A second experiment (v2) asked whether making training images look more like phone photos would close the "
+        "gap to the UWEC photos. Two extra copies of each training image were added, with random wider context, "
+        "downscaling and JPEG compression, a synthetic fence and colour changes, all with the same probability for "
+        "every class. The recipe was fixed before any v2 result was seen, and the validation and test images were "
+        "the same as in v1.")
+    _replace_p("Validation, test and UWEC images are identical in v1 and v2", None)
+    _replace_list("Part 1 crops are re-cut", [])
+    C[:] = [it for it in C if not (it[0] in ("bul", "num") and not it[1])]
+    _replace_p("The selected PyTorch model is exported to ONNX",
+        "The selected model is exported to ONNX [@ort]. A check script compared the app's resize and crop with "
+        "training on all 606 validation and test images; the ONNX model gives the same answer as PyTorch on all of them.")
+    _replace_p("To reach visitors, the published site includes",
+        "To reach visitors, the published site includes an install page with a QR code and short instructions; "
+        "it can be printed and displayed at a site entrance.")
+    _replace_p("All runs finished without error and stopped early.",
+        "All runs finished without error and stopped early. Validation top-1 rose above 0.8 within a few epochs and "
+        "levelled off near 0.90 ({F:trainval}). The best small model, v1_n_seed2 (validation top-1 0.910), was "
+        "selected for the app.")
+    _replace_p("On the test set, 11 classes were classified perfectly",
+        "On UWEC photos, only zebra and tiger transferred well ({T:uwecclass}). Chimpanzee, bird and buffalo were "
+        "never correct in any run.")
+    _replace_p("Sunbird AI produced",
+        "Of the 125 Sunbird AI names (25 species in 5 languages), 44 passed the automatic check and are shown in the "
+        "app, 39 of them with audio ({F:langcheck}). Common animals with a well-known local word, such as lion "
+        "(Luganda Empologoma, Runyankole Entare) or bird (Ekinyonyi), were translated reliably; animals with "
+        "compound or foreign names, such as Uganda kob or kudu, were not.")
+    _replace_p("{T:visitornames} lists", None)
+    _replace_p("{F:testuwec} sets the two test sets",
+        "{F:testuwec} sets the two test sets side by side for each run. All runs score 0.90 to 0.92 on the test set "
+        "and 0.15 to 0.23 on the UWEC photos, so the gap is a property of the data, not of one unlucky run.")
+    _replace_p("{F:sources} shows where the data come from.",
+        "{F:sources} shows where the training data come from: mostly Part 1 video crops and public images, while "
+        "the UWEC test photos are a kind of image the model never saw in training. The low-data classes have more "
+        "test photos than training images (buffalo: 1 training image, 9 test photos), so they cannot be expected to work.")
+    _replace_p("{F:conf} compares the confidence",
+        "{F:conf} compares the confidence of correct and wrong answers. On the test set wrong answers are rare and "
+        "less confident, so the 0.7 threshold separates them well. On UWEC photos 37 of 47 answers are wrong, with a "
+        "mean confidence of 0.80, so most of them pass the threshold.")
+    _replace_p("{F:v1v2} summarises the v2 experiment",
+        "{F:v1v2} summarises the v2 experiment. The test score rises slightly, while the UWEC scores overlap "
+        "within their spread; chimpanzee, bird and buffalo stay at zero.")
+    _replace_list("Collect about 30 or more original phone photos", [
+        "Collect about 30 or more original phone photos per species at UWEC, from varied angles and distances; train "
+        "on part of them and keep a new, unseen set for testing.",
+        "Add a detector step that crops small or distant animals before classification [@beery19,@gadot].",
+        "Have native speakers verify the local-language names and audio [@sunbird].",
+        "Pilot the app with visitors and guides at UWEC and measure its effect on the visitor experience.",
+        "Extend the species list and content to the main national parks.",
+        "Build the planned Android app from the same model."])
+    for n, it in enumerate(C):
+        if it[0] == "tab" and it[1] == "issues":
+            C[n] = it[:4] + ([r for r in it[4] if not r[0].startswith(("ONNX Runtime Web rejected", "Shared GPU",
+                              "Ultralytics data-loader", "Web images must not be hosted"))],) + it[5:]
+
+    # ---- second round: tighter text for the short version
+    _drop_section("Significance for tourism")
+    _drop_section("Engineering results")
+    _drop_section("Comparison with the literature")
+    C[:] = [it for it in C if not (it[0] == "fig" and it[1] == "langsel")]   # keep the table
+    # related work: four sub-sections -> two paragraphs, same citations
+    for t in ("Generalisation to new places and cameras", "Training data from public image sources",
+              "Running models on the phone", "Augmentation, confidence and evaluation practice"):
+        k = next(n for n, it in enumerate(C) if it[0] == "h3" and it[1].endswith(t))
+        del C[k]
+    _replace_p("The best-documented weakness of wildlife classifiers",
+        "The best-documented weakness of wildlife classifiers is poor transfer to new conditions: models do very "
+        "well where they were trained but poorly at new locations [@beery18], with training-set size, class "
+        "imbalance and location among the critical factors [@schneider,@norman]. Benchmarks such as WILDS show the "
+        "same gap across many domains [@wilds]. Projects often borrow public images when local data are scarce; "
+        "Flickr and iNaturalist photos can transfer well, especially with some target-domain images added "
+        "[@shepley], and large collections such as iNat2021 [@inat21] and the BioCLIP foundation model [@bioclip] "
+        "show how far such data can be pushed. Classifying detector crops rather than whole images also helps "
+        "[@gadot].")
+    _replace_p("Because local labelled data are scarce", None)
+    _replace_p("On-device inference needs small networks.",
+        "On the phone, small networks such as MobileNetV3 [@mobilenet] and the YOLOv8 classifiers [@yolov8] are "
+        "needed, and speed varies widely across phone chipsets [@aibench]. Models exported to ONNX run in a browser "
+        "with ONNX Runtime Web [@ort], and progressive web apps install from a link and work offline [@pwa]. "
+        "Training uses data augmentation [@shorten,@randaug] and the AdamW optimiser [@adamw]. Because networks "
+        "are often over-confident, especially under dataset shift [@guo,@ovadia], the app uses the softmax "
+        "confidence only as a simple \"not sure\" signal [@hendrycks], and data leakage between training and test "
+        "sets is avoided by splitting by session [@kapoor].")
+    _replace_p("Data augmentation is the usual first response", None)
+    _replace_p("The dataset has 26 classes.",
+        "The dataset has 26 classes: 20 regular animal classes, five low-data classes kept at the team's request and "
+        "flagged in the app (lion, buffalo, cheetah, kudu and hyena, with 1 to 14 training images each), and an "
+        "\"other\" class so that the app can answer \"not one of my species\".")
+    _replace_p("Top-1 is the share of photos named correctly;",
+        "Top-1 is the share of photos named correctly, top-5 the share whose true class is among the five most "
+        "probable, and macro accuracy the mean of per-class accuracy. Results over seeds are given as mean "
+        "± standard deviation.")
+    _replace_p("UgaWildVision is a static PWA",
+        "UgaWildVision is a progressive web app ({F:pwa}). The visitor takes or chooses a photo; the app prepares it "
+        "exactly as in training and runs the model on the phone, then shows the top answer with its confidence. "
+        "Below 0.7 it says it is not sure and asks for a closer photo. All files are cached, so the app works "
+        "offline, and photos never leave the phone.")
+    _replace_p("Around the classifier, the app is designed as a pocket field guide",
+        "Around the classifier, the app is a pocket field guide ({F:appscreens}): a home page with a QR code, a "
+        "searchable list of animals, and a page per animal with a photo, its name in the chosen language with a "
+        "Listen button, its conservation status, a safety note and short facts. Visitors can also record sightings. "
+        "Guide photos are openly licensed Wikimedia Commons images, credited in the app.")
+    _replace_p("Ugandan languages serve domestic visitors; international visitors",
+        "International visitors need their own languages. To avoid choosing these by preference, a fixed rule was "
+        "applied to the official table of visitors by country of residence [@tsa2023]: a language is included if "
+        "visitors from countries where it is a main language make up at least 2% of all visitors or of leisure "
+        "visitors ({T:langsel}). Kiswahili, French, German and Dutch pass; Italian, Spanish, Arabic and Russian do not.")
+    _replace_p("Kiswahili names and audio come from Sunbird AI in the same way",
+        "Kiswahili names come from Sunbird AI; French, German and Dutch names are common names checked against "
+        "Wikipedia [@wikipedia] and are spoken by the phone's own voice [@webspeech].")
+    _replace_p("The classes that transfer are those whose training images",
+        "The classes that transfer, zebra and tiger, are those whose training images are many different photos. "
+        "Those that fail have little variety: chimpanzee images come almost entirely from one video, and the "
+        "training birds are small egrets unlike the owls and parrots at UWEC. Phone-style augmentation changes the "
+        "look of an image but cannot add this missing variety, which is why v2 did not help [@shepley].")
+    _drop_section("Why augmentation did not help")
+    _replace_list("Only 47 of the 5,187 UWEC dataset images", [
+        "Only 47 of the 5,187 UWEC dataset images are the team's own photos, so most training images are not "
+        "visitor-style photos.",
+        "Five classes have very few training images, and chimpanzee images come almost entirely from one video."])
+    _replace_list("The UWEC test set is small", [
+        "The real-world test has 47 photos covering 8 of 26 classes, so per-class results rest on 1 to 9 photos.",
+        "Three random seeds per setting; the standard deviations are rough."])
+    _replace_list("The classifier names one animal per photo", [
+        "The app names one animal per photo and works best when the animal fills the frame.",
+        "Local-language names come from machine translation and must be checked by native speakers.",
+        "The app has not yet been tried with visitors or timed on a range of phones."])
+
+
+def _renumber():
+    import re as _re
+    a = b = c = 0
+    for n, it in enumerate(C):
+        if it[0] not in ("h1", "h2", "h3"):
+            continue
+        title = it[1].split(" ", 1)[1]
+        if it[0] == "h1":
+            a, b, c = a + 1, 0, 0; num = f"{a}."
+        elif it[0] == "h2":
+            b, c = b + 1, 0; num = f"{a}.{b}"
+        else:
+            c += 1; num = f"{a}.{b}.{c}"
+        C[n] = (it[0], f"{num} {title}")
+
+
+if SHORT:
+    _apply_trim()
+    _renumber()
+
 REFS = {
     "tuia": "D. Tuia, B. Kellenberger, S. Beery, B. R. Costelloe, et al., \"Perspectives in machine learning for wildlife conservation,\" Nature Communications, vol. 13, art. 792, 2022, doi: 10.1038/s41467-022-27980-y.",
     "norouzzadeh": "M. S. Norouzzadeh, A. Nguyen, M. Kosmala, A. Swanson, M. S. Palmer, C. Packer, and J. Clune, \"Automatically identifying, counting, and describing wild animals in camera-trap images with deep learning,\" Proc. National Academy of Sciences, vol. 115, no. 25, pp. E5716-E5725, 2018, doi: 10.1073/pnas.1719367115.",
@@ -863,7 +1074,7 @@ REFS = {
     "sunbird": "Sunbird AI, \"Sunbird AI API: translation, speech recognition and text-to-speech for Ugandan languages.\" [Online]. Available: https://sunbird.ai (accessed Nov. 2026).",
 }
 
-ABSTRACT = [
+ABSTRACT_FULL = [
     "Tourism is one of Uganda's leading export earners, bringing in a record USD 1.28 billion in 2024, and "
     "it rests largely on wildlife. Yet a visitor's experience of that wildlife depends on guide interpretation "
     "that is uneven, rarely available in local languages and absent for self-guided visitors, at sites where "
@@ -886,6 +1097,19 @@ ABSTRACT = [
     "placed to supply the missing data: about 30 or more varied phone photos per species would be the most "
     "useful next step, together with native-speaker checks of the local-language content.",
 ]
+ABSTRACT_SHORT = [
+    "Tourism earned Uganda a record USD 1.28 billion in 2024 and rests largely on wildlife, yet visitors often "
+    "lack guides, local-language information and a network connection. This report presents UgaWildVision, an "
+    "offline smartphone field guide that uses artificial intelligence to identify an animal from a visitor's "
+    "photo and shows its facts, safety notes and name in nine languages, chosen from visitor statistics. A "
+    "26-class YOLOv8n-cls image classifier was trained on Part 1 park video crops and the team's UWEC (Entebbe) "
+    "dataset, and exported to a 5.9 MB model that runs on the phone in about 45 ms. It reaches 0.909 top-1 "
+    "accuracy on a standard test set but 0.191 on the team's own phone photos taken at UWEC, because the "
+    "training images differ from real visitor photos; phone-style augmentation did not close this gap. The app "
+    "is ready to support visitors and guides, and its accuracy is expected to improve most from about 30 real "
+    "phone photos per species.",
+]
+ABSTRACT = ABSTRACT_SHORT if SHORT else ABSTRACT_FULL
 KEYWORDS = ("Keywords: tourism in Uganda, smart tourism, artificial intelligence, wildlife species "
             "identification, image classification, YOLOv8, progressive web app, domain shift")
 
@@ -1187,14 +1411,15 @@ def main():
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
     doc.add_paragraph("References", style="Heading 1")
     unused = [k for k in REFS if k not in cnum]
-    if unused:
+    if unused and not SHORT:
         raise SystemExit(f"references never cited: {unused}")
     for i, ref in enumerate((REFS[k] for k in order), 1):
         p = doc.add_paragraph(); fmt_par(p, align=WD_ALIGN_PARAGRAPH.LEFT, after=4, spacing=1.15)
         p.paragraph_format.left_indent = Cm(1.0); p.paragraph_format.first_line_indent = Cm(-1.0)
         p.add_run(f"[{i}]\t{ref}")
         p.paragraph_format.tab_stops.add_tab_stop(Cm(1.0))
-    render(APPENDIX)
+    if not SHORT:
+        render(APPENDIX)
 
     # Ask Word to refresh fields when opened (in case update_fields.ps1 is not run).
     doc.core_properties.title = "UgaWildVision Part 2 Report"
