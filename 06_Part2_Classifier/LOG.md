@@ -276,3 +276,34 @@ close, clear photo." (1 in 5 = UWEC top-1 0.19 ± 0.03 over 3 seeds, n = 47; Ent
   either document and exports its PDF.
 - Block diagrams (approach, app flow) redrawn as plain black boxes and arrows, no colour; used in both reports
   and on the Methodology slide.
+
+## 2026-11-24 - Entry 18: three-source wording, plain English, dataset slide, 8-minute deck
+
+- Owner's wording change, system-wide: three image sources all contribute - the NESTLER Safari video dataset
+  (official name: NESTLER Wild Animal Recognition Video Dataset, Zenodo 10.5281/zenodo.17036940; Safari part =
+  Kibale, Queen Elizabeth, Bwindi, Feb-Jun 2025), internet images (images.cv 3,930; iNaturalist-style 1,016; other
+  web 194) and our own 47 UWEC photos. NESTLER + internet images are used for training, validation and testing;
+  the 47 own photos stay a real-world test only (kept out of training so one test is independent) - explained in
+  the report. Figures now say "NESTLER Safari" instead of "Part 1" (approach diagram, dataset chart).
+- Report text rewritten in plain student-level English (`report/plain_text.py`, applied by position in
+  `build_report.py`). Short version uses the owner's own edits from the Downloads copy
+  (`UgaWildVision_Part2_Report_Short_Edited.docx`) wherever the owner edited a paragraph. Title page follows the
+  owner's layout (NAME / STUDENT NO. table, "Capstone Project Report", "Year 3, Semester 1").
+- New report subsection 3.1 "Dataset size and splits": 4,795 images (2,312 NESTLER, 1,284 images.cv, 972
+  iNaturalist-style, 180 other web, 47 own); 3,636 / 553 / 559 + 47; and what validation is for (stop training,
+  pick best epoch/run without touching test sets; limit: validation looks like training data, ~0.90 for every
+  run, so it cannot predict the UWEC 0.15-0.23).
+- Axes: all bar charts start at 0; only the v1-v2 validation line chart starts at 0.6 (now stated in its caption).
+- Owner's Downloads deck updated for an 8-minute talk (`report/update_downloads_deck.py`; saved as
+  "... - updated.pptx", original untouched): new Results analysis slide, dataset-and-splits slide content with
+  validation card, QR on the last slide, timing in the speaker notes (total 7:35).
+- Guide rebuilt for 8 minutes with a decisions-and-rejected-options table (`report/build_guide.py`, local only).
+
+## 2026-11-24 - Entry 19: internet image sources named
+
+- Owner asked what "internet images" means. Sources, from the files: images.cv (www.images.cv; 3 ready-made 256 px sets:
+  tiger 2,280, leopard 1,400, fox 250; meta.json says "provide_by www.images.cv"); iNaturalist (1,016 photos from 603
+  observations; observation number in each file name; 8 random numbers checked against iNaturalist's public API, all
+  matched the species); other websites (194 pictures saved with a browser, sites not recorded, one Shutterstock watermark).
+- `results/image_sources.csv` (5,140 rows: file name, source, id, iNaturalist link, class) lists every internet image.
+  Report table, figures, deck, guide now name the sources; "iNaturalist-style" became "iNaturalist".

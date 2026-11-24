@@ -53,29 +53,85 @@ def _canvas(w, h):
 
 
 def diagram_pipeline(out):
-    """Proposed approach as a top-to-bottom flow (plain boxes and arrows)."""
-    fig, ax = _canvas(8, 6.3)
-    W, H, X, top, step = 5.6, 0.55, 0.9, 5.6, 0.86
-    texts = ["Data sources: Part 1 park video frames + UWEC dataset",
-             "Audit: record the source and correct label of every image",
+    """Proposed approach: three image sources at the top, then a top-to-bottom flow (plain boxes and arrows)."""
+    fig, ax = _canvas(9, 7.9)
+    X, W, H = 0.4, 5.6, 0.62
+    ys = [6.9 - k * 0.98 for k in range(7)]
+    # row 1: the three sources
+    box(ax, 0.4, ys[0], 2.7, H, "NESTLER Safari\nvideo crops")
+    box(ax, 3.3, ys[0], 2.7, H, "Internet images (images.cv,\niNaturalist, web downloads)")
+    box(ax, 6.4, ys[0], 2.3, H, "Our own 47 UWEC\nphone photos")
+    for t in ax.texts[-3:]:
+        t.set_fontsize(10)
+    steps = ["Audit: record the source and correct label of every image",
              "Build dataset: 26 classes, split by session or photo group",
              "Train YOLOv8 classifiers (3 random seeds)",
              "Select the model on validation; evaluate on test sets",
              "Export the model (ONNX) to the phone app",
              "Offline field guide app for visitors"]
-    ys = [top - k * step for k in range(len(texts))]
-    for t, y in zip(texts, ys):
+    for t, y in zip(steps, ys[1:]):
         box(ax, X, y, W, H, t)
-    for y1, y2 in zip(ys[:-1], ys[1:]):
+    arrow(ax, 1.75, ys[0], 1.75, ys[1] + H)
+    arrow(ax, 4.65, ys[0], 4.65, ys[1] + H)
+    for y1, y2 in zip(ys[1:-1], ys[2:]):
         arrow(ax, X + W / 2, y1, X + W / 2, y2 + H)
-    # the team's own UWEC phone photos skip training and are used only for the real-world test
-    bx, bw = 6.75, 1.2
-    box(ax, bx, ys[2] - 0.15, bw, H + 0.3, "47 UWEC\nphone photos\n(test only)")
-    ax.texts[-1].set_fontsize(9)
+    # our own photos skip training and go straight to the real-world test
     ym = ys[4] + H / 2
-    ax.plot([bx + bw / 2, bx + bw / 2], [ys[2] - 0.15, ym], color="black", lw=1.0)
-    arrow(ax, bx + bw / 2, ym, X + W, ym)
+    ax.plot([7.55, 7.55], [ys[0], ym], color="black", lw=1.0)
+    ax.text(7.62, (ys[0] + ym) / 2, "real-world\ntest only", fontsize=10, va="center")
+    arrow(ax, 7.55, ym, X + W, ym)
+    ax.text(3.4, ys[2] - 0.18, "NESTLER + internet images: train, validate and test", ha="left", va="center", fontsize=8)
     save(fig, out, "fig_pipeline.png")
+
+
+def diagram_sources_slide(out):
+    """Slide version: the three sources and how each is used."""
+    fig, ax = _canvas(7.0, 4.6)
+    ys = [3.5, 1.95, 0.4]
+    texts = ["NESTLER Safari video crops\n(Ugandan parks)\nTrain, validate, test",
+             "Internet images\n(images.cv, iNaturalist, web)\nTrain, validate, test",
+             "Our own 47 photos\n(UWEC, Entebbe)\nReal-world test only"]
+    for t, y in zip(texts, ys):
+        box(ax, 0.15, y, 3.5, 1.0, t)
+        ax.texts[-1].set_fontsize(12)
+    box(ax, 4.35, 1.95, 1.2, 1.0, "26-class\nclassifier"); ax.texts[-1].set_fontsize(12)
+    box(ax, 5.85, 1.95, 1.0, 1.0, "Phone\napp"); ax.texts[-1].set_fontsize(12)
+    arrow(ax, 3.65, ys[0] + 0.5, 4.35, 2.75)
+    arrow(ax, 3.65, ys[1] + 0.5, 4.35, 2.45)
+    arrow(ax, 3.65, ys[2] + 0.5, 4.95, 1.95)
+    ax.text(4.55, 1.35, "tests it", fontsize=11)
+    arrow(ax, 5.55, 2.45, 5.85, 2.45)
+    save(fig, out, "fig_sources_slide.png")
+
+
+def fig_dataset_split(root, index, out):
+    """Slide figure: size of the dataset, its make-up by source, and the train / validation / test splits."""
+    idx = rd(index)
+    c = collections.Counter((r["split"], r["origin"]) for r in idx)
+    splits = [("train", "Training"), ("val", "Validation"), ("test", "Test"), ("uwec_test", "UWEC test")]
+    origins = [("safari_crop", "NESTLER Safari crops", BLUE), ("images_cv", "images.cv", ORANGE),
+               ("inat_style", "iNaturalist", AQUA), ("web", "Other websites", YELLOW),
+               ("own_phone", "Our own UWEC photos", "#6250d6")]
+    tot = {o: sum(c[(s, o)] for s, _ in splits) for o, _, _ in origins}
+    total = sum(tot.values())
+    fig, ax = plt.subplots(figsize=(6.4, 3.7))
+    ypos = list(range(len(splits)))[::-1]
+    for (s, lab), y in zip(splits, ypos):
+        left = 0
+        for o, _, col in origins:
+            v = c[(s, o)]
+            ax.barh(y, v, left=left, color=col, height=0.62, edgecolor="white", linewidth=0.8)
+            left += v
+        share = f" ({100 * left / (total - tot['own_phone']):.0f}%)" if s != "uwec_test" else ""
+        ax.text(left + 40, y, f"{left:,}{share}", va="center", fontsize=11)
+    ax.set_yticks(ypos); ax.set_yticklabels([lab for _, lab in splits], fontsize=11)
+    ax.set_xlim(0, 4700); ax.set_xlabel("images", fontsize=10)
+    ax.set_title(f"{total:,} images in the dataset", fontsize=13, fontweight="bold")
+    ax.grid(axis="y", visible=False)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=col) for _, _, col in origins]
+    labels = [f"{lab}: {tot[o]:,}" for o, lab, _ in origins]
+    ax.legend(handles, labels, fontsize=10, loc="lower right", frameon=False)
+    save(fig, out, "fig_dataset_split.png")
 
 
 def diagram_pwa(out):
@@ -102,8 +158,8 @@ def diagram_pwa(out):
 def fig_sources(root, index, out):
     man = rd(root / "manifest.csv")
     src = collections.Counter(r["source"] for r in man)
-    names = {"images_cv": "images.cv", "inat_style": "iNaturalist-style", "web": "Web downloads",
-             "own_phone": "Team phone photos (UWEC)"}
+    names = {"images_cv": "images.cv", "inat_style": "iNaturalist", "web": "Other websites",
+             "own_phone": "Our own photos (UWEC)"}
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 3.9), gridspec_kw={"width_ratios": [1, 1.25]})
     keys = ["images_cv", "inat_style", "web", "own_phone"]
     vals = [src[k] for k in keys]
@@ -111,14 +167,14 @@ def fig_sources(root, index, out):
     for i, v in enumerate(vals[::-1]):
         a1.text(v + 40, i, f"{v:,}", va="center", fontsize=10, color=INK)
     a1.set_xlabel("images"); a1.set_xlim(0, max(vals) * 1.18)
-    a1.set_title("(a) Sources of the 5,187 UWEC dataset images", fontsize=11)
+    a1.set_title("(a) The 5,187 internet and UWEC images, by source", fontsize=11)
     a1.grid(axis="y", visible=False)
     idx = rd(index)
     c = collections.Counter((r["split"], r["origin"]) for r in idx)
     splits = ["train", "val", "test", "uwec_test"]
-    origins = [("safari_crop", "Part 1 crops", BLUE), ("images_cv", "images.cv", ORANGE),
-               ("inat_style", "iNaturalist-style", AQUA), ("web", "Web", YELLOW),
-               ("own_phone", "Team phone (UWEC)", "#6250d6")]
+    origins = [("safari_crop", "NESTLER Safari crops", BLUE), ("images_cv", "images.cv", ORANGE),
+               ("inat_style", "iNaturalist", AQUA), ("web", "Web", YELLOW),
+               ("own_phone", "Our UWEC photos", "#6250d6")]
     left = [0] * 4
     for o, lab, col in origins:
         v = [c[(s, o)] for s in splits]
@@ -252,7 +308,7 @@ if __name__ == "__main__":
     ap.add_argument("--root", required=True); ap.add_argument("--index", required=True); ap.add_argument("--out", required=True)
     a = ap.parse_args()
     root, out = Path(a.root), Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    diagram_pipeline(out); diagram_pwa(out)
-    fig_sources(root, Path(a.index), out); fig_split_counts(root, out)
+    diagram_pipeline(out); diagram_pwa(out); diagram_sources_slide(out); diagram_sources_slide(out)
+    fig_sources(root, Path(a.index), out); fig_dataset_split(root, Path(a.index), out); fig_split_counts(root, out)
     fig_metrics_per_run(root, out); fig_confidence(root, out); fig_v1_v2(root, out)
     fig_val_curves_v2(root, out); fig_loss(root, out)
